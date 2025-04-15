@@ -1,7 +1,8 @@
-package com.android.hci
+package com.android.hci.utility
 
 import android.app.Application
-
+import com.android.hci.utility.PrototypeUser
+import com.android.hci.utility.UserSession
 
 
 class MyApplication : Application() {

@@ -1,5 +1,12 @@
-package com.android.hci
+package com.android.hci.utility
 
+import androidx.annotation.DrawableRes
+
+data class ExploreItem(
+    @DrawableRes val imageResId: Int, // Use @DrawableRes for image resources
+    val title: String,
+    val description: String
+)
 
 data class PrototypeUser(
     val name: String?,
@@ -15,3 +22,4 @@ data class UserSession(
     var userName: String? = null,
     var userEmail: String? = null
 )
+

@@ -11,8 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import com.android.hci.MyApplication
-import com.android.hci.PrototypeUser
+import com.android.hci.utility.MyApplication
+import com.android.hci.utility.PrototypeUser
 import com.android.hci.R
 import com.google.android.material.imageview.ShapeableImageView
 import java.text.SimpleDateFormat
