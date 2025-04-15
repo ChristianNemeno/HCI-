@@ -8,14 +8,16 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.hci.R
 import com.android.hci.utility.ExploreAdapter
 import com.android.hci.utility.ExploreItem
+import com.android.hci.utility.OnExploreItemClickListener
 import com.google.android.material.appbar.MaterialToolbar
 
-class ExploreFragment : Fragment() {
+class ExploreFragment : Fragment(), OnExploreItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var exploreAdapter: ExploreAdapter
@@ -66,7 +68,7 @@ class ExploreFragment : Fragment() {
             // Replace R.drawable.ic_launcher_background with actual document/image drawables
         )
 
-        exploreAdapter = ExploreAdapter(itemList)
+        exploreAdapter = ExploreAdapter(itemList, this)
         recyclerView.layoutManager = LinearLayoutManager(context) // Set LayoutManager
         recyclerView.adapter = exploreAdapter // Set Adapter
     }
@@ -87,5 +89,21 @@ class ExploreFragment : Fragment() {
             // Perform the same dummy action or filtering if desired
         }
 
+    }
+    private fun navigateToDetailFragment(item: ExploreItem) {
+        // Create the detail fragment instance
+        val detailFragment = ExploreDetailFragment.newInstance(item.title, item.description, item.imageResId)
+
+        // Use FragmentManager to replace the current fragment
+        parentFragmentManager.commit {
+            replace(R.id.fragment_container, detailFragment) // R.id.fragment_container from activity_main.xml
+            addToBackStack(null) // Add transaction to back stack to allow back navigation
+            setReorderingAllowed(true)
+        }
+    }
+
+    override fun onExploreItemClick(item: ExploreItem) {
+        // Navigate to the Detail Fragment/Activity here
+        navigateToDetailFragment(item) // Call the navigation function
     }
 }

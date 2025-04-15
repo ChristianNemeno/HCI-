@@ -5,13 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.android.hci.R
+import com.android.hci.fragments.ExploreFragment
 
-// Make sure ExploreItem is imported if it's in a different package
 
-class ExploreAdapter(private val items: List<ExploreItem>) :
+class ExploreAdapter(private val items: List<ExploreItem>
+                    ,private val listener: OnExploreItemClickListener
+) :
     RecyclerView.Adapter<ExploreAdapter.ExploreViewHolder>() {
 
     // ViewHolder holds references to the views for each item
@@ -40,8 +41,7 @@ class ExploreAdapter(private val items: List<ExploreItem>) :
 
         // Optional: Add click listener to the item
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.itemView.context, "Clicked: ${item.title}", Toast.LENGTH_SHORT).show()
-            // You could navigate or do something else here
+            listener.onExploreItemClick(item)
         }
     }
 
