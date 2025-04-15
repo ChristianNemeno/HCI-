@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="login_form_details">#CCCCCC</color>
+    <color name="login_form_details_medium">#A9A9A9</color>
+    <color name="login_button_background">#4CAF50</color>
+    <color name="login_link_text">#007BFF</color>
+    <color name="gradient_start_color">#4A65A0</color>
+    <color name="gradient_end_color">#7795D5</color>
+
+
+    <color name ="blue">#3674B5</color>
+    <color name ="very_dark_cyan">#006A71</color>
+
+    <color name="learnify_background_dark_blue">#0A192F</color>
+    <color name="learnify_button_background">#1A3A5F</color>
+    <color name="learnify_text_light">#CCD6F6</color>
+    <color name="learnify_premium_button">#FFA500</color>
+    <color name="learnify_icon_tint">@color/learnify_text_light</color>
+    <color name="bottom_nav_background">#0F2444</color>
+
+    <color name="light_teal">#9ACBD0</color>
+    <color name="medium_teal">#48A6A7</color>
+    <color name="dark_teal">#006A71</color>
+    <color name="dark_blue">#3674B5</color>
+    <color name="medium_blue">#578FCA</color>
+    <color name="light_blue">#A1E3F9</color>
+    <color name="pale_teal">#D1F8EF</color>
+
+    <!-- Standard UI Colors -->
+
+    <color name="light_gray">#EEEEEE</color>
+    <color name="medium_gray">#999999</color>
+    <color name="dark_gray">#666666</color>
+
+    <!-- Semantic Colors -->
+    <color name="primary">@color/dark_teal</color>
+    <color name="primary_variant">@color/medium_teal</color>
+    <color name="secondary">@color/dark_blue</color>
+    <color name="secondary_variant">@color/medium_blue</color>
+    <color name="background">@color/pale_teal</color>
+    <color name="surface">@color/white</color>
+    <color name="accent">@color/light_blue</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">@color/dark_teal</color>
+    <color name="text_secondary">@color/medium_blue</color>
+    <color name="text_tertiary">@color/medium_teal</color>
+    <color name="text_hint">@color/light_teal</color>
+
+    <!-- Status Colors -->
+    <color name="success">#4CAF50</color>
+    <color name="warning">#FFC107</color>
+    <color name="error">#F44336</color>
+    <color name="info">@color/light_blue</color>
+</resources>
