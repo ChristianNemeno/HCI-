@@ -23,3 +23,7 @@ data class UserSession(
     var userEmail: String? = null
 )
 
+interface OnExploreItemClickListener {
+    fun onExploreItemClick(item: ExploreItem)
+}
+
