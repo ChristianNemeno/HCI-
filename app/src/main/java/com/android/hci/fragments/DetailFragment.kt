@@ -11,13 +11,11 @@ import com.android.hci.R // Make sure R is imported
 
 class DetailFragment : Fragment() {
 
-    // Arguments keys
     companion object {
         private const val ARG_TITLE = "item_title"
         private const val ARG_DESCRIPTION = "item_description"
         private const val ARG_IMAGE_RES_ID = "item_image_res_id"
 
-        // Factory method to create a new instance with arguments
         fun newInstance(title: String, description: String, @androidx.annotation.DrawableRes imageResId: Int): DetailFragment {
             val fragment = DetailFragment()
             val args = Bundle().apply {

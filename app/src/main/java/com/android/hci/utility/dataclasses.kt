@@ -2,6 +2,19 @@ package com.android.hci.utility
 
 import androidx.annotation.DrawableRes
 
+// Add this within the dataclasses.kt file
+data class CommunityPost(
+    val username: String,
+    val timestamp: String, // Simple string for prototype (e.g., "2h ago")
+    val title: String,
+    val contentSnippet: String?, // Optional text content
+    val imageUrl: Int?, // Optional: Use DrawableRes if using local images like ExploreItem
+    var upvotes: Int,
+    var downvotes: Int,
+    val commentCount: Int
+)
+
+
 data class ExploreItem(
     @DrawableRes val imageResId: Int, // Use @DrawableRes for image resources
     val title: String,

@@ -38,8 +38,6 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        // Initialize Views using findViewById
-        // Consider using View Binding for better null safety and conciseness
         editTextName = findViewById(R.id.editTextName)
         editTextEmailRegister = findViewById(R.id.editTextEmailRegister)
         editTextPhone = findViewById(R.id.editTextPhone)
@@ -50,7 +48,6 @@ class RegisterActivity : AppCompatActivity() {
         textViewLoginLink = findViewById(R.id.textViewLoginLink)
         imageViewProfilePic = findViewById(R.id.imageViewProfilePic)
 
-        // Set OnClickListener for the LOGIN link using a lambda
         textViewLoginLink.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -58,9 +55,8 @@ class RegisterActivity : AppCompatActivity() {
             finish()
         }
 
-        // Set OnClickListener for the Create Account button
         buttonCreateAccount.setOnClickListener {
-            if (validateInput()) { // Use your validation logic
+            if (validateInput()) {
                 val name = editTextName.text.toString().trim()
                 val email = editTextEmailRegister.text.toString().trim()
                 val phone = editTextPhone.text.toString().trim() // Get phone
@@ -73,13 +69,12 @@ class RegisterActivity : AppCompatActivity() {
                     email = email,
                     phone = phone,
                     dob = dob,
-                    password_insecure = password // Storing password - PROTOTYPE ONLY
+                    password_insecure = password
                 )
 
-                // Get instance of MyApplication
                 val myApp = applicationContext as MyApplication
 
-                // Try to register the user in MyApplication
+
                 if (myApp.registerUser(newUser)) {
                     Toast.makeText(this, "Registration Successful (Prototype)!", Toast.LENGTH_SHORT).show()
 
@@ -93,7 +88,6 @@ class RegisterActivity : AppCompatActivity() {
                     finish()
 
                 } else {
-                    // Registration failed (email likely already exists)
                     Toast.makeText(this, "Registration Failed: Email might already be registered.", Toast.LENGTH_LONG).show()
                     editTextEmailRegister.error = "Email already exists"
                     editTextEmailRegister.requestFocus()
@@ -101,14 +95,11 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-        // Set OnClickListener for Date of Birth EditText to show DatePickerDialog
         editTextDOB.setOnClickListener {
             showDatePickerDialog()
         }
 
-        // Set OnClickListener for Profile Image
         imageViewProfilePic.setOnClickListener {
-            // --- Placeholder for Image Selection Logic ---
             // Intent to pick image from gallery or camera
             Toast.makeText(this, "Image selection logic goes here!", Toast.LENGTH_SHORT).show()
         }
@@ -127,30 +118,29 @@ class RegisterActivity : AppCompatActivity() {
         DatePickerDialog(
             this,
             dateSetListener,
-            // Use Calendar constants for initial date
             dobCalendar.get(Calendar.YEAR),
             dobCalendar.get(Calendar.MONTH),
             dobCalendar.get(Calendar.DAY_OF_MONTH)
         ).show()
     }
 
-    // --- Helper method to update DOB EditText label ---
+
     private fun updateLabel() {
-        val myFormat = "dd/MM/yyyy" // Choose your desired format
+        val myFormat = "dd/MM/yyyy"
         val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
         editTextDOB.setText(sdf.format(dobCalendar.time))
     }
 
-    // --- Basic Input Validation Example in Kotlin ---
+
     private fun validateInput(): Boolean {
         val name = editTextName.text.toString().trim()
         val email = editTextEmailRegister.text.toString().trim()
         val phone = editTextPhone.text.toString().trim()
-        val dob = editTextDOB.text.toString().trim() // Check if date was selected
-        val password = editTextPasswordRegister.text.toString() // No trim for password
+        val dob = editTextDOB.text.toString().trim()
+        val password = editTextPasswordRegister.text.toString()
         val confirmPassword = editTextConfirmPassword.text.toString()
 
-        if (name.isBlank()) { // Use isBlank for better check than isEmpty
+        if (name.isBlank()) {
             editTextName.error = "Name is required"
             editTextName.requestFocus()
             return false
@@ -165,13 +155,11 @@ class RegisterActivity : AppCompatActivity() {
             editTextEmailRegister.requestFocus()
             return false
         }
-        // Add more validation for phone if needed (e.g., length, digits only)
-        // if (phone.isBlank()) { ... }
 
         if (dob.isBlank()) {
-            // Show toast as error on non-focusable field is tricky
+
             Toast.makeText(this, "Please select Date of Birth", Toast.LENGTH_SHORT).show()
-            // You could visually highlight the DOB field or show a general message
+
             return false
         }
         if (password.isEmpty()) { // isEmpty is fine for password check

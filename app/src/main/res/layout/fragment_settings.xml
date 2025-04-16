@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/learnify_background_dark_blue"
+    tools:context=".fragments.SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            style="@style/SettingsSectionHeader"
+            android:text="Account" />
+
+        <TextView
+            android:id="@+id/settings_item_edit_profile"  style="@style/SettingsItem"
+            android:text="Edit Profile"
+            app:drawableStartCompat="@android:drawable/ic_menu_edit" />
+
+        <TextView
+            android:id="@+id/settings_item_change_password"  style="@style/SettingsItem"
+            android:text="Change Password"
+            app:drawableStartCompat="@android:drawable/ic_lock_lock" />
+
+        <TextView
+            android:id="@+id/settings_item_manage_subscription"  style="@style/SettingsItem"
+            android:text="Manage Subscription"
+            app:drawableStartCompat="@drawable/ic_learnify_logo"
+            app:drawableTint="@color/learnify_text_light" />
+        <TextView
+            android:id="@+id/settings_item_logout"  style="@style/SettingsItem"
+            android:text="Logout"
+            app:drawableStartCompat="@android:drawable/ic_menu_revert" />
+
+        <View style="@style/SettingsDivider" />
+        <TextView
+            style="@style/SettingsSectionHeader"
+            android:text="Notifications" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/settings_switch_push"  style="@style/SettingsSwitchItem"
+            android:text="Push Notifications"
+            android:checked="true"/>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/settings_switch_email"
+            style="@style/SettingsSwitchItem"
+            android:text="Email Notifications"
+            android:checked="false"/>
+
+
+        <View style="@style/SettingsDivider" />
+        <TextView
+            style="@style/SettingsSectionHeader"
+            android:text="Appearance" />
+
+        <TextView
+            android:id="@+id/settings_item_theme"  style="@style/SettingsItem"
+            android:text="Theme (Light/Dark)"
+            app:drawableStartCompat="@android:drawable/ic_menu_gallery" />
+
+        <TextView
+            android:id="@+id/settings_item_text_size"  style="@style/SettingsItem"
+            android:text="Text Size"
+            app:drawableStartCompat="@android:drawable/ic_menu_sort_alphabetically" />
+
+
+        <View style="@style/SettingsDivider" />
+        <TextView
+            style="@style/SettingsSectionHeader"
+            android:text="About" />
+
+        <TextView
+            android:id="@+id/settings_item_help"  style="@style/SettingsItem"
+            android:text="Help &amp; Support"
+            app:drawableStartCompat="@android:drawable/ic_menu_help" />
+
+        <TextView
+            android:id="@+id/settings_item_privacy"  style="@style/SettingsItem"
+            android:text="Privacy Policy"
+            app:drawableStartCompat="@android:drawable/ic_menu_info_details"/>
+
+        <TextView
+            android:id="@+id/settings_item_terms"  style="@style/SettingsItem"
+            android:text="Terms of Service"
+            app:drawableStartCompat="@android:drawable/ic_menu_info_details" />
+
+        <TextView
+            android:id="@+id/settings_item_app_version"  style="@style/SettingsItem"
+            android:text="App Version"
+            app:drawableStartCompat="@android:drawable/ic_menu_myplaces" />
+
+
+    </LinearLayout>
+</ScrollView>

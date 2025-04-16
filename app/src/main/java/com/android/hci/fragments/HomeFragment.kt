@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
         }
 
         communityButton.setOnClickListener {
-            navigateToFragment(PlaceholderFragment.newInstance("Community"))
+            navigateToFragment(CommunityFragment())
         }
 
         savedButton.setOnClickListener {
