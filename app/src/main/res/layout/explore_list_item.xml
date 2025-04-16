@@ -19,25 +19,25 @@
 
         <ImageView
             android:id="@+id/image_view_document"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:contentDescription="Document Thumbnail"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@drawable/ic_launcher_background" /> <TextView
-        android:id="@+id/text_view_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textColor="@color/learnify_text_light"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image_view_document"
-        app:layout_constraintTop_toTopOf="@+id/image_view_document"
-        tools:text="Document Title" />
+            android:id="@+id/text_view_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/learnify_text_light"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image_view_document"
+            app:layout_constraintTop_toTopOf="@+id/image_view_document"
+            tools:text="Document Title" />
 
         <TextView
             android:id="@+id/text_view_description"

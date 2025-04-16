@@ -1,6 +1,7 @@
 package com.android.hci.utility
 
 import androidx.annotation.DrawableRes
+import java.util.UUID
 
 // Add this within the dataclasses.kt file
 data class CommunityPost(
@@ -25,6 +26,11 @@ data class SavedItem(
     val title: String,
     val description: String
     // Add any other relevant fields like source URL, saved date etc.
+)
+data class MyContentItem(
+    val imageUriString: String, // Store URI as String
+    val id: String = UUID.randomUUID().toString() // Simple unique ID
+    // Add title, description etc. here later if needed
 )
 
 data class PrototypeUser(

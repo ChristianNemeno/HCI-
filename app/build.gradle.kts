@@ -37,7 +37,8 @@ android {
 
 dependencies {
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
-
+    implementation("io.coil-kt:coil:2.5.0")
+    implementation ("androidx.activity:activity-ktx:1.8.0")
     implementation ("androidx.fragment:fragment-ktx:1.5.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -15,13 +15,13 @@ class MyApplication : Application() {
     // Instance to hold the current user session data
     var currentUserSession: UserSession? = null
 
+    val myContentList = mutableListOf<MyContentItem>()
+
     override fun onCreate() {
         super.onCreate()
-        // Initialize session as logged out
         currentUserSession = UserSession(isLoggedIn = false)
     }
 
-    // --- Registration Logic (Prototype) ---
     fun registerUser(user: PrototypeUser): Boolean {
         if (registeredUsers.containsKey(user.email)) {
             return false // User already exists
@@ -30,7 +30,6 @@ class MyApplication : Application() {
         return true // Registration successful
     }
 
-    // --- Login Logic (Prototype) ---
     fun loginUser(email: String, passwordToCheck: String): Boolean {
         val user = registeredUsers[email]
         if (user != null && user.password_insecure == passwordToCheck) {

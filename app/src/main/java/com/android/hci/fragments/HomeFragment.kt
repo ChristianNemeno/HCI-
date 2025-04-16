@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
         }
 
         createButton.setOnClickListener {
-            navigateToFragment(PlaceholderFragment.newInstance("Create"))
+            navigateToFragment(CreateFragment())
         }
 
         return view
