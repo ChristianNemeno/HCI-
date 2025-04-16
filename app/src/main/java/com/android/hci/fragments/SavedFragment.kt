@@ -17,7 +17,7 @@ import com.android.hci.utility.ExploreItem
 import com.android.hci.utility.OnExploreItemClickListener
 import com.google.android.material.appbar.MaterialToolbar
 
-class ExploreFragment : Fragment(), OnExploreItemClickListener {
+class SavedFragment : Fragment(), OnExploreItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var exploreAdapter: ExploreAdapter
@@ -30,11 +30,11 @@ class ExploreFragment : Fragment(), OnExploreItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the updated layout
-        val view = inflater.inflate(R.layout.fragment_explore, container, false)
+        val view = inflater.inflate(R.layout.fragment_saved, container, false)
 
         // --- Find Views ---
-        recyclerView = view.findViewById(R.id.recycler_view_explore)
-        toolbar = view.findViewById(R.id.toolbar_explore)
+        recyclerView = view.findViewById(R.id.recycler_view_saved)
+        toolbar = view.findViewById(R.id.toolbar_saved)
         searchPlaceholder = view.findViewById(R.id.search_placeholder) // Get search placeholder
         searchButton = view.findViewById(R.id.button_search_icon) // Get search icon button
 
@@ -58,12 +58,10 @@ class ExploreFragment : Fragment(), OnExploreItemClickListener {
     private fun setupRecyclerView() {
         // Create hardcoded data (Example with Philippines theme)
         val itemList = listOf(
-            ExploreItem(R.drawable.discrete, "Discrete Mathematics", "Logic, set theory, combinatorics and graph theory."),
-            ExploreItem(R.drawable.calculus, "Calculus II", "A continuation of Calculus I, focusing on techniques of integration, applications of the integral."),
-            ExploreItem(R.drawable.la, "Linear Algebra", "A study of vectors, vector spaces, matrices, and linear transformations"),
-            ExploreItem(R.drawable.im, "Information Management", "The collection, organization, storage, and retrieval of information"),
-            ExploreItem(R.drawable.fundaprog, "Fundamentals of Programming", "Domain ni Arellano."),
-            ExploreItem(R.drawable.dsa, "Data structures and Algorithms", "Focuses on organizing and processing data efficiently.")
+            ExploreItem(R.drawable.energy, "\n" + "Renewable and Sustainable Energy Reviews", "The mission of Renewable and Sustainable Energy Reviews is to communicate the most interesting and relevant critical thinking in renewable and sustainable energy in order to bring together the research community"),
+            ExploreItem(R.drawable.tamaraw, "Field survey on Tamaraw", "Tamaraw, an endemic species on the Philippine island of Mindoro, is a critically endangered animal listed by IUCN."),
+            ExploreItem(R.drawable.eco, "The Economy as Instituted Process", "The economy embodied in institutions that cause individual choices to give rise to interdependent movements that constitute the economic process. Assuming that the choice is induced by an insufficiency of the means, the logic of rational action turns into that variant of the theory of choice called formal economics."),
+            ExploreItem(R.drawable.philhis, "Philippine history", "Philippine History is the story of the Filipino people's struggle for freedom, identity, and nationhood. It begins with early indigenous cultures and societies, followed by over 300 years of Spanish colonization, American rule, and Japanese occupation. After gaining independence in 1946, the Philippines has since evolved through political, social, and economic changes, shaping its unique blend of Eastern and Western influences and a resilient democratic spirit."),
 
             // Add more items as needed
             // Replace R.drawable.ic_launcher_background with actual document/image drawables

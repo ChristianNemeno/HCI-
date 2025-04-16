@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.android.hci.R // Make sure R is imported
 
-class ExploreDetailFragment : Fragment() {
+class DetailFragment : Fragment() {
 
     // Arguments keys
     companion object {
@@ -18,8 +18,8 @@ class ExploreDetailFragment : Fragment() {
         private const val ARG_IMAGE_RES_ID = "item_image_res_id"
 
         // Factory method to create a new instance with arguments
-        fun newInstance(title: String, description: String, @androidx.annotation.DrawableRes imageResId: Int): ExploreDetailFragment {
-            val fragment = ExploreDetailFragment()
+        fun newInstance(title: String, description: String, @androidx.annotation.DrawableRes imageResId: Int): DetailFragment {
+            val fragment = DetailFragment()
             val args = Bundle().apply {
                 putString(ARG_TITLE, title)
                 putString(ARG_DESCRIPTION, description)

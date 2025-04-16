@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
         }
 
         savedButton.setOnClickListener {
-            navigateToFragment(PlaceholderFragment.newInstance("Saved"))
+            navigateToFragment(SavedFragment())
         }
 
         createButton.setOnClickListener {

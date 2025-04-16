@@ -7,6 +7,12 @@ data class ExploreItem(
     val title: String,
     val description: String
 )
+data class SavedItem(
+    val imageIdentifier: String, // Could be a URL or resource name
+    val title: String,
+    val description: String
+    // Add any other relevant fields like source URL, saved date etc.
+)
 
 data class PrototypeUser(
     val name: String?,
