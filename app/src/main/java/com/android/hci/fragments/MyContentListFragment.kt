@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit // Import commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.hci.R
 import com.android.hci.utility.MyApplication
 import com.android.hci.utility.MyContentAdapter
+import com.android.hci.utility.MyContentItem // Import Item
+import com.android.hci.utility.OnMyContentItemClickListener // Import Listener
 
-class MyContentListFragment : Fragment() {
+// Implement the listener interface
+class MyContentListFragment : Fragment(), OnMyContentItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var myContentAdapter: MyContentAdapter
@@ -21,7 +25,6 @@ class MyContentListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_content_list, container, false)
     }
 
@@ -35,28 +38,39 @@ class MyContentListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        // Get the list from MyApplication
         val contentList = myApp.myContentList
 
-        myContentAdapter = MyContentAdapter(contentList)
+        // Pass 'this' as the listener to the adapter
+        myContentAdapter = MyContentAdapter(contentList, this)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = myContentAdapter
-
-        // Optional: Handle empty list state (show a message if list is empty)
     }
 
-    // Notify adapter when returning to fragment (optional, but good practice)
-    // This helps refresh the list if you add an item and immediately navigate here
     override fun onResume() {
         super.onResume()
-        if (::myContentAdapter.isInitialized) {
-            // Get the latest list and notify adapter
-            myContentAdapter = MyContentAdapter(myApp.myContentList)
+        // Refresh list on resume
+        if (::myApp.isInitialized && ::recyclerView.isInitialized) {
+            myContentAdapter = MyContentAdapter(myApp.myContentList, this) // Pass listener again
             recyclerView.adapter = myContentAdapter
-            // Or if using DiffUtil: myContentAdapter.submitList(myApp.myContentList)
         }
     }
 
+    // --- Implementation of the click listener interface ---
+    override fun onMyContentItemClick(item: MyContentItem) {
+        // Navigate to the Detail Fragment, passing the item's data
+        parentFragmentManager.commit {
+            replace(
+                R.id.fragment_container, // Make sure this is your container ID in MainActivity
+                MyContentDetailFragment.newInstance(
+                    title = item.title,
+                    imageUriString = item.imageUriString,
+                    textContent = item.textContent
+                )
+            )
+            addToBackStack(null) // Allow navigating back to the list
+            setReorderingAllowed(true)
+        }
+    }
 
     companion object {
         fun newInstance(): MyContentListFragment {

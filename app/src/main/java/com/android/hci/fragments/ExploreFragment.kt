@@ -1,11 +1,14 @@
 package com.android.hci.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher // Import TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText // Import EditText
 import android.widget.ImageButton
-import android.widget.TextView
+// import android.widget.TextView // No longer needed for search placeholder
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -22,89 +25,92 @@ class ExploreFragment : Fragment(), OnExploreItemClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var exploreAdapter: ExploreAdapter
     private lateinit var toolbar: MaterialToolbar
-    private lateinit var searchPlaceholder: TextView
+    // MODIFIED: Changed from TextView to EditText
+    private lateinit var searchEditText: EditText
     private lateinit var searchButton: ImageButton
+
+    // --- NEW: Store the full list ---
+    private val fullItemList = listOf(
+        ExploreItem(R.drawable.discrete, "Discrete Mathematics", "Logic, set theory, combinatorics and graph theory."),
+        ExploreItem(R.drawable.calculus, "Calculus II", "A continuation of Calculus I, focusing on techniques of integration, applications of the integral."),
+        ExploreItem(R.drawable.la, "Linear Algebra", "A study of vectors, vector spaces, matrices, and linear transformations"),
+        ExploreItem(R.drawable.im, "Information Management", "The collection, organization, storage, and retrieval of information"),
+        ExploreItem(R.drawable.fundaprog, "Fundamentals of Programming", "Domain ni Arellano."),
+        ExploreItem(R.drawable.dsa, "Data structures and Algorithms", "Focuses on organizing and processing data efficiently.")
+        // Add more items as needed
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the updated layout
         val view = inflater.inflate(R.layout.fragment_explore, container, false)
 
         // --- Find Views ---
         recyclerView = view.findViewById(R.id.recycler_view_explore)
         toolbar = view.findViewById(R.id.toolbar_explore)
-        searchPlaceholder = view.findViewById(R.id.search_placeholder) // Get search placeholder
-        searchButton = view.findViewById(R.id.button_search_icon) // Get search icon button
+        // MODIFIED: Find EditText instead of TextView
+        searchEditText = view.findViewById(R.id.search_edit_text)
+        searchButton = view.findViewById(R.id.button_search_icon)
 
-
-        // --- Setup Toolbar (Optional: Add title, navigation, etc. if needed) ---
-        // If you are using this fragment within MainActivity, MainActivity might handle the Toolbar.
-        // If this fragment manages its own toolbar:
-        // (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
-
-
-        // --- Setup RecyclerView ---
+        // --- Setup RecyclerView (using full list initially) ---
         setupRecyclerView()
 
-        // --- Setup Hardcoded Search ---
-        setupHardcodedSearch()
-
+        // --- Setup Search Logic ---
+        setupSearch() // Renamed from setupHardcodedSearch
 
         return view
     }
 
     private fun setupRecyclerView() {
-        // Create hardcoded data (Example with Philippines theme)
-        val itemList = listOf(
-            ExploreItem(R.drawable.discrete, "Discrete Mathematics", "Logic, set theory, combinatorics and graph theory."),
-            ExploreItem(R.drawable.calculus, "Calculus II", "A continuation of Calculus I, focusing on techniques of integration, applications of the integral."),
-            ExploreItem(R.drawable.la, "Linear Algebra", "A study of vectors, vector spaces, matrices, and linear transformations"),
-            ExploreItem(R.drawable.im, "Information Management", "The collection, organization, storage, and retrieval of information"),
-            ExploreItem(R.drawable.fundaprog, "Fundamentals of Programming", "Domain ni Arellano."),
-            ExploreItem(R.drawable.dsa, "Data structures and Algorithms", "Focuses on organizing and processing data efficiently.")
-
-            // Add more items as needed
-            // Replace R.drawable.ic_launcher_background with actual document/image drawables
-        )
-
-        exploreAdapter = ExploreAdapter(itemList, this)
-        recyclerView.layoutManager = LinearLayoutManager(context) // Set LayoutManager
-        recyclerView.adapter = exploreAdapter // Set Adapter
+        // Use the full list initially
+        exploreAdapter = ExploreAdapter(fullItemList.toMutableList(), this) // Pass the full list
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = exploreAdapter
     }
 
 
-    private fun setupHardcodedSearch(){
-        // Hardcoded action for the placeho lder click
-        searchPlaceholder.setOnClickListener {
-            Toast.makeText(context, "Search functionality is hardcoded for now.", Toast.LENGTH_SHORT).show()
-            // In a real scenario, you'd navigate to a search screen or expand the search view.
-            // For the prototype, we just show a message.
-            // If you searched "philippines", you might filter the static list here,
-            // but the request was just for the button functionality to be hardcoded.
-        }
-        // Hardcoded action for the search icon click
-        searchButton.setOnClickListener{
-            Toast.makeText(context, "Search Initiated (Hardcoded)", Toast.LENGTH_SHORT).show()
-            // Perform the same dummy action or filtering if desired
-        }
+    // MODIFIED: Renamed and implemented actual filtering
+    private fun setupSearch() {
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
+            override fun afterTextChanged(s: Editable?) {
+                filterList(s.toString())
+            }
+        })
+
+        // Keep the button to trigger search manually as well (optional)
+        searchButton.setOnClickListener {
+            filterList(searchEditText.text.toString())
+            // Optionally hide keyboard here
+        }
     }
+
+    // --- NEW: Filtering function ---
+    private fun filterList(query: String) {
+        val filteredList = if (query.isBlank()) {
+            fullItemList // Show all if query is empty
+        } else {
+            fullItemList.filter {
+                it.title.contains(query, ignoreCase = true) // Filter by title (case-insensitive)
+                // You could also filter by description: || it.description.contains(query, ignoreCase = true)
+            }
+        }
+        exploreAdapter.updateList(filteredList) // Update the adapter
+    }
+
     private fun navigateToDetailFragment(item: ExploreItem) {
-        // Create the detail fragment instance
         val detailFragment = DetailFragment.newInstance(item.title, item.description, item.imageResId)
-
-        // Use FragmentManager to replace the current fragment
         parentFragmentManager.commit {
-            replace(R.id.fragment_container, detailFragment) // R.id.fragment_container from activity_main.xml
-            addToBackStack(null) // Add transaction to back stack to allow back navigation
+            replace(R.id.fragment_container, detailFragment)
+            addToBackStack(null)
             setReorderingAllowed(true)
         }
     }
 
     override fun onExploreItemClick(item: ExploreItem) {
-        // Navigate to the Detail Fragment/Activity here
-        navigateToDetailFragment(item) // Call the navigation function
+        navigateToDetailFragment(item)
     }
 }

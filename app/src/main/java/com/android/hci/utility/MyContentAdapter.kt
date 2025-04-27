@@ -1,21 +1,33 @@
 package com.android.hci.utility
 
-import android.net.Uri // Import Uri
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast // Keep Toast for example
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.android.hci.R
 
-class MyContentAdapter(private val contentList: List<MyContentItem>) :
-    RecyclerView.Adapter<MyContentAdapter.MyContentViewHolder>() {
+// Add listener parameter to the constructor
+class MyContentAdapter(
+    private val contentList: List<MyContentItem>,
+    private val listener: OnMyContentItemClickListener // Added listener
+) : RecyclerView.Adapter<MyContentAdapter.MyContentViewHolder>() {
 
     class MyContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.image_view_my_content_item)
+        val textView: TextView = itemView.findViewById(R.id.text_view_my_content_item)
+
+        // Bind function to set listener
+        fun bind(item: MyContentItem, listener: OnMyContentItemClickListener) {
+            itemView.setOnClickListener {
+                listener.onMyContentItemClick(item)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyContentViewHolder {
@@ -28,25 +40,52 @@ class MyContentAdapter(private val contentList: List<MyContentItem>) :
 
     override fun onBindViewHolder(holder: MyContentViewHolder, position: Int) {
         val item = contentList[position]
+        holder.bind(item, listener) // Pass item and listener to bind
 
-        // Display the URI String in the TextView (optional)
+        // Reset visibility
+        holder.imageView.visibility = View.GONE
+        holder.textView.visibility = View.GONE
 
-        // Use Coil to load the image from the URI string
-        try {
-            val imageUri = item.imageUriString.toUri() // Convert String back to Uri
-            holder.imageView.load(imageUri) {
-                placeholder(R.drawable.ic_launcher_background) // Optional placeholder
-                error(R.drawable.ic_create) // Optional error image
+        // --- Safely handle image URI ---
+        if (item.imageUriString != null) {
+            try {
+                item.imageUriString.let { uriString ->
+                    val imageUri = uriString.toUri()
+                    holder.imageView.visibility = View.VISIBLE
+                    holder.imageView.load(imageUri) {
+                        placeholder(R.drawable.ic_launcher_background)
+                        error(R.drawable.ic_create)
+                    }
+                }
+            } catch (e: Exception) {
+                holder.imageView.setImageResource(R.drawable.ic_create)
+                holder.imageView.visibility = View.VISIBLE
             }
-        } catch (e: Exception) {
-            // Handle potential errors converting string to URI or loading
-            holder.imageView.setImageResource(R.drawable.ic_create) // Show error placeholder
-            // Log the error e.g., Log.e("MyContentAdapter", "Error loading image URI: ${item.imageUriString}", e)
+        }
+        // --- Handle text content ---
+        else if (item.textContent != null) {
+            // Show title if available, otherwise just content
+            val displayText = if (!item.title.isNullOrEmpty()) {
+                "${item.title}\n\n${item.textContent}" // Simple combination for list view
+            } else {
+                item.textContent
+            }
+            holder.textView.text = displayText
+            holder.textView.visibility = View.VISIBLE
+        }
+        // Optional: Handle case where both are null
+        else {
+            // Maybe show title only if content and image are null?
+            if (!item.title.isNullOrEmpty()) {
+                holder.textView.text = item.title
+                holder.textView.visibility = View.VISIBLE
+            } else {
+                // Fallback if truly empty
+                holder.textView.text = "Empty Item"
+                holder.textView.visibility = View.VISIBLE
+            }
         }
 
-        // Add onClickListener to the item if needed
-        holder.itemView.setOnClickListener {
-            // E.g., Toast.makeText(holder.itemView.context, "Clicked item ID: ${item.id}", Toast.LENGTH_SHORT).show()
-        }
+        // REMOVED the old onClickListener from here, it's now in holder.bind()
     }
 }

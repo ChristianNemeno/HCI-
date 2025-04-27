@@ -1,5 +1,6 @@
 package com.android.hci.utility
 
+import android.annotation.SuppressLint // Needed for notifyDataSetChanged
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,10 @@ import com.android.hci.R
 import com.android.hci.fragments.ExploreFragment
 
 
-class ExploreAdapter(private val items: List<ExploreItem>
-                    ,private val listener: OnExploreItemClickListener
+class ExploreAdapter(
+    // MODIFIED: Made initial list accessible and mutable within the adapter scope
+    private var items: List<ExploreItem>,
+    private val listener: OnExploreItemClickListener
 ) :
     RecyclerView.Adapter<ExploreAdapter.ExploreViewHolder>() {
 
@@ -47,4 +50,11 @@ class ExploreAdapter(private val items: List<ExploreItem>
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = items.size
+
+    // --- NEW METHOD: To update the list displayed by the adapter ---
+    @SuppressLint("NotifyDataSetChanged") // Using this for simplicity in prototype
+    fun updateList(newList: List<ExploreItem>) {
+        items = newList
+        notifyDataSetChanged() // In production, use DiffUtil for better performance
+    }
 }

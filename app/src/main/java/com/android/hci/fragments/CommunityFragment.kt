@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.hci.R // Make sure R is imported
+import com.android.hci.utility.Comment // Import the new Comment class
 import com.android.hci.utility.CommunityAdapter
 import com.android.hci.utility.CommunityPost
 
@@ -31,13 +32,66 @@ class CommunityFragment : Fragment() {
 
     private fun setupRecyclerView() {
         // --- Create Sample Data (Prototype) ---
+        // --- MODIFIED: Added hardcoded comments to the first post ---
         val samplePosts = mutableListOf(
-            CommunityPost("u/LearnifyGuru", "1h ago", "Welcome to the Learnify Community!", "Share your thoughts, ask questions, and connect with fellow learners.", null, 15, 1, 5),
-            CommunityPost("u/StudyBuddy123", "3h ago", "Tips for Calculus II Integration?", null, R.drawable.calculus, 25, 2, 12), // Example using drawable
-            CommunityPost("u/CodeWizard", "5h ago", "Understanding Data Structures", "Let's discuss the best ways to implement linked lists.", null, 8, 0, 3),
-            CommunityPost("u/HistoryFan", "1d ago", "Interesting fact about Philippine History", "Did you know...", R.drawable.philhis, 42, 5, 18),
-            CommunityPost("u/EcoNomist", "2d ago", "The Economy as Instituted Process - Thoughts?", "Reading this paper and wanted to discuss...", null, 5, 1, 2)
-
+            CommunityPost(
+                username = "u/LearnifyGuru",
+                timestamp = "1h ago",
+                title = "Welcome to the Learnify Community!",
+                contentSnippet = "Share your thoughts, ask questions, and connect with fellow learners.",
+                imageUrl = null,
+                upvotes = 15,
+                downvotes = 1,
+                commentCount = 2, // Update this count to match actual comments added
+                comments = listOf( // Add comments for the first post
+                    Comment("u/Alice", "Great to be here!", "55m ago"),
+                    Comment("u/Bob", "Looking forward to learning.", "30m ago")
+                )
+            ),
+            CommunityPost(
+                username = "u/StudyBuddy123",
+                timestamp = "3h ago",
+                title = "Tips for Calculus II Integration?",
+                contentSnippet = null,
+                imageUrl = R.drawable.calculus, // Example using drawable
+                upvotes = 25,
+                downvotes = 2,
+                commentCount = 12,
+                comments = emptyList() // No comments for this post
+            ),
+            CommunityPost(
+                username = "u/CodeWizard",
+                timestamp = "5h ago",
+                title = "Understanding Data Structures",
+                contentSnippet = "Let's discuss the best ways to implement linked lists.",
+                imageUrl = null,
+                upvotes = 8,
+                downvotes = 0,
+                commentCount = 3,
+                comments = emptyList() // No comments
+            ),
+            CommunityPost(
+                username = "u/HistoryFan",
+                timestamp = "1d ago",
+                title = "Interesting fact about Philippine History",
+                contentSnippet = "Did you know...",
+                imageUrl = R.drawable.philhis, // Example using drawable
+                upvotes = 42,
+                downvotes = 5,
+                commentCount = 18,
+                comments = emptyList() // No comments
+            ),
+            CommunityPost(
+                username = "u/EcoNomist",
+                timestamp = "2d ago",
+                title = "The Economy as Instituted Process - Thoughts?",
+                contentSnippet = "Reading this paper and wanted to discuss...",
+                imageUrl = null,
+                upvotes = 5,
+                downvotes = 1,
+                commentCount = 2,
+                comments = emptyList() // No comments
+            )
         )
 
         communityAdapter = CommunityAdapter(samplePosts) // Pass mutable list
